@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { Globe, Search, Settings, Play, HelpCircle } from 'lucide-react';
 
-interface Tooltip {
-  text: string;
-  children: React.ReactNode;
-}
-
-const Tooltip: React.FC<Tooltip> = ({ text, children }) => (
-  <div className="relative group">
-    {children}
-    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 w-64">
-      {text}
-    </div>
-  </div>
-);
+// Tooltip component (only for info icons, appears on click)
+const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, children }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <span className="relative inline-block">
+      <span onClick={() => setVisible(v => !v)} style={{ cursor: 'pointer' }}>
+        {children}
+      </span>
+      {visible && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded z-50 w-64">
+          {text}
+        </div>
+      )}
+    </span>
+  );
+};
 
 const NetworkRecon: React.FC = () => {
   const [activeTab, setActiveTab] = useState('port-scan');
@@ -41,7 +44,7 @@ const NetworkRecon: React.FC = () => {
           <label className="block text-cyber-accent text-sm mb-2 flex items-center">
             Target IP Address
             <Tooltip text="The IP address of the target host to scan. Default is the host IP (192.168.122.1). Use CIDR notation for network ranges (e.g., 192.168.1.0/24).">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
           <input
@@ -57,7 +60,7 @@ const NetworkRecon: React.FC = () => {
           <label className="block text-cyber-accent text-sm mb-2 flex items-center">
             Port Range
             <Tooltip text="Specify ports to scan. Examples: '80' (single), '1-1000' (range), '22,80,443' (list), or '1-65535' (all ports). Exclude port 53 with '1-52,54-65535'.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
           <select
@@ -77,7 +80,7 @@ const NetworkRecon: React.FC = () => {
           <label className="block text-cyber-accent text-sm mb-2 flex items-center">
             Scan Type
             <Tooltip text="TCP SYN (-sS): Stealth scan, fast and reliable. TCP Connect (-sT): Full connection, more reliable but slower. UDP (-sU): Scan UDP ports (very slow).">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
           <select
@@ -96,7 +99,7 @@ const NetworkRecon: React.FC = () => {
           <label className="block text-cyber-accent text-sm mb-2 flex items-center">
             Timing Template
             <Tooltip text="T0 (Paranoid): Very slow, IDS evasion. T1 (Sneaky): Slow, some IDS evasion. T3 (Normal): Default speed. T4 (Aggressive): Fast scan. T5 (Insane): Very fast, may miss results.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
           <select
@@ -126,7 +129,7 @@ const NetworkRecon: React.FC = () => {
           <label htmlFor="verbose" className="text-cyber-accent text-sm flex items-center">
             Verbose Output (-v)
             <Tooltip text="Show detailed progress information during the scan. Recommended to monitor scan progress and identify any issues.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
         </div>
@@ -142,7 +145,7 @@ const NetworkRecon: React.FC = () => {
           <label htmlFor="serviceDetection" className="text-cyber-accent text-sm flex items-center">
             Service Detection (-sV)
             <Tooltip text="Probe open ports to determine service/version info. Provides detailed information about running services but increases scan time.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
         </div>
@@ -158,7 +161,7 @@ const NetworkRecon: React.FC = () => {
           <label htmlFor="osDetection" className="text-cyber-accent text-sm flex items-center">
             OS Detection (-O)
             <Tooltip text="Detect operating system of target host. Uses TCP/IP fingerprinting. May require root privileges and increases scan time.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
         </div>
@@ -174,7 +177,7 @@ const NetworkRecon: React.FC = () => {
           <label htmlFor="scriptScan" className="text-cyber-accent text-sm flex items-center">
             Script Scan (-sC)
             <Tooltip text="Run default scripts against target. Useful for quick vulnerability checks but may increase scan time.">
-              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+              <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
             </Tooltip>
           </label>
         </div>
@@ -218,7 +221,7 @@ const NetworkRecon: React.FC = () => {
               className={`px-4 py-2 rounded-t-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
                 activeTab === tab.id
                   ? 'bg-cyber-primary text-cyber-dark shadow-cyber border border-cyber-primary'
-                  : 'bg-cyber-dark text-cyber-accent hover:bg-cyber-muted hover:text-cyber-primary border border-transparent'
+                  : 'bg-cyber-dark text-cyber-accent border border-transparent'
               }`}
             >
               <Icon size={18} />
