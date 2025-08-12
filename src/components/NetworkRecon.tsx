@@ -1,0 +1,264 @@
+import React, { useState } from 'react';
+import { Globe, Search, Settings, Play, HelpCircle } from 'lucide-react';
+
+interface Tooltip {
+  text: string;
+  children: React.ReactNode;
+}
+
+const Tooltip: React.FC<Tooltip> = ({ text, children }) => (
+  <div className="relative group">
+    {children}
+    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 w-64">
+      {text}
+    </div>
+  </div>
+);
+
+const NetworkRecon: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('port-scan');
+  const [config, setConfig] = useState({
+    targetIP: '192.168.122.1',
+    portRange: '1-65535',
+    scanType: 'tcp',
+    timing: 'T4',
+    verbose: true,
+    serviceDetection: true,
+    osDetection: true,
+    scriptScan: false
+  });
+
+  const tabs = [
+    { id: 'port-scan', name: 'PORT SCAN', icon: Search },
+    { id: 'service-enum', name: 'SERVICE ENUM', icon: Globe },
+    { id: 'network-map', name: 'NET MAP', icon: Settings }
+  ];
+
+  const renderPortScanConfig = () => (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-cyber-accent text-sm mb-2 flex items-center">
+            Target IP Address
+            <Tooltip text="The IP address of the target host to scan. Default is the host IP (192.168.122.1). Use CIDR notation for network ranges (e.g., 192.168.1.0/24).">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+          <input
+            type="text"
+            value={config.targetIP}
+            onChange={(e) => setConfig({ ...config, targetIP: e.target.value })}
+            className="cyber-input w-full rounded"
+            placeholder="192.168.122.1"
+          />
+        </div>
+
+        <div>
+          <label className="block text-cyber-accent text-sm mb-2 flex items-center">
+            Port Range
+            <Tooltip text="Specify ports to scan. Examples: '80' (single), '1-1000' (range), '22,80,443' (list), or '1-65535' (all ports). Exclude port 53 with '1-52,54-65535'.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+          <select
+            value={config.portRange}
+            onChange={(e) => setConfig({ ...config, portRange: e.target.value })}
+            className="cyber-input w-full rounded"
+          >
+            <option value="1-1000">Top 1000 Ports</option>
+            <option value="1-52,54-65535">All TCP (Exclude 53)</option>
+            <option value="1-65535">All TCP Ports</option>
+            <option value="22,23,25,53,80,110,143,443,993,995">Common Ports</option>
+            <option value="custom">Custom Range</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-cyber-accent text-sm mb-2 flex items-center">
+            Scan Type
+            <Tooltip text="TCP SYN (-sS): Stealth scan, fast and reliable. TCP Connect (-sT): Full connection, more reliable but slower. UDP (-sU): Scan UDP ports (very slow).">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+          <select
+            value={config.scanType}
+            onChange={(e) => setConfig({ ...config, scanType: e.target.value })}
+            className="cyber-input w-full rounded"
+          >
+            <option value="tcp">TCP SYN Scan (-sS)</option>
+            <option value="connect">TCP Connect (-sT)</option>
+            <option value="udp">UDP Scan (-sU)</option>
+            <option value="both">TCP + UDP</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-cyber-accent text-sm mb-2 flex items-center">
+            Timing Template
+            <Tooltip text="T0 (Paranoid): Very slow, IDS evasion. T1 (Sneaky): Slow, some IDS evasion. T3 (Normal): Default speed. T4 (Aggressive): Fast scan. T5 (Insane): Very fast, may miss results.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+          <select
+            value={config.timing}
+            onChange={(e) => setConfig({ ...config, timing: e.target.value })}
+            className="cyber-input w-full rounded"
+          >
+            <option value="T0">T0 - Paranoid (Slowest)</option>
+            <option value="T1">T1 - Sneaky</option>
+            <option value="T2">T2 - Polite</option>
+            <option value="T3">T3 - Normal</option>
+            <option value="T4">T4 - Aggressive (Recommended)</option>
+            <option value="T5">T5 - Insane (Fastest)</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <div className="flex items-center space-x-3">
+          <input
+            type="checkbox"
+            id="verbose"
+            checked={config.verbose}
+            onChange={(e) => setConfig({ ...config, verbose: e.target.checked })}
+            className="rounded border-cyber-border"
+          />
+          <label htmlFor="verbose" className="text-cyber-accent text-sm flex items-center">
+            Verbose Output (-v)
+            <Tooltip text="Show detailed progress information during the scan. Recommended to monitor scan progress and identify any issues.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          <input
+            type="checkbox"
+            id="serviceDetection"
+            checked={config.serviceDetection}
+            onChange={(e) => setConfig({ ...config, serviceDetection: e.target.checked })}
+            className="rounded border-cyber-border"
+          />
+          <label htmlFor="serviceDetection" className="text-cyber-accent text-sm flex items-center">
+            Service Detection (-sV)
+            <Tooltip text="Probe open ports to determine service/version info. Provides detailed information about running services but increases scan time.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          <input
+            type="checkbox"
+            id="osDetection"
+            checked={config.osDetection}
+            onChange={(e) => setConfig({ ...config, osDetection: e.target.checked })}
+            className="rounded border-cyber-border"
+          />
+          <label htmlFor="osDetection" className="text-cyber-accent text-sm flex items-center">
+            OS Detection (-O)
+            <Tooltip text="Detect operating system of target host. Uses TCP/IP fingerprinting. May require root privileges and increases scan time.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          <input
+            type="checkbox"
+            id="scriptScan"
+            checked={config.scriptScan}
+            onChange={(e) => setConfig({ ...config, scriptScan: e.target.checked })}
+            className="rounded border-cyber-border"
+          />
+          <label htmlFor="scriptScan" className="text-cyber-accent text-sm flex items-center">
+            Script Scan (-sC)
+            <Tooltip text="Run default scripts against target. Useful for quick vulnerability checks but may increase scan time.">
+              <HelpCircle size={14} className="ml-1 text-cyber-muted hover:text-cyber-primary cursor-help" />
+            </Tooltip>
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+
+  function generateCommand() {
+    let cmd = 'nmap';
+    if (config.scanType === 'tcp') cmd += ' -sS';
+    else if (config.scanType === 'connect') cmd += ' -sT';
+    else if (config.scanType === 'udp') cmd += ' -sU';
+    else if (config.scanType === 'both') cmd += ' -sS -sU';
+    cmd += ` -p ${config.portRange}`;
+    cmd += ` --${config.timing}`;
+    if (config.verbose) cmd += ' -v';
+    if (config.serviceDetection) cmd += ' -sV';
+    if (config.osDetection) cmd += ' -O';
+    if (config.scriptScan) cmd += ' -sC';
+    cmd += ` ${config.targetIP}`;
+    return cmd;
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
+          NETWORK RECONNAISSANCE
+        </h1>
+        <div className="text-cyber-accent text-sm">
+          PORT SCANNING • SERVICE ENUMERATION • NETWORK MAPPING
+        </div>
+      </div>
+      <div className="mb-4 flex space-x-2 justify-center">
+        {tabs.map(tab => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 rounded-t-lg font-semibold flex items-center space-x-2 transition-all duration-300 ${
+                activeTab === tab.id
+                  ? 'bg-cyber-primary text-cyber-dark shadow-cyber border border-cyber-primary'
+                  : 'bg-cyber-dark text-cyber-accent hover:bg-cyber-muted hover:text-cyber-primary border border-transparent'
+              }`}
+            >
+              <Icon size={18} />
+              <span>{tab.name}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
+        {activeTab === 'port-scan' && renderPortScanConfig()}
+        {activeTab === 'service-enum' && <div className="text-cyber-muted">Service Enumeration module coming soon...</div>}
+        {activeTab === 'network-map' && <div className="text-cyber-muted">Network Mapping module coming soon...</div>}
+        {/* Command Preview and Execute Button for port-scan only */}
+        {activeTab === 'port-scan' && (
+          <div>
+            <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
+              <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
+              <code className="text-cyber-primary text-sm font-mono">{generateCommand()}</code>
+            </div>
+            <div className="mt-6 flex justify-center">
+              <button className="cyber-button flex items-center space-x-2">
+                <Play size={16} />
+                <span>EXECUTE SCAN</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      {/* Results Panel */}
+      <div className="cyber-card p-6 rounded-lg">
+        <h2 className="text-xl font-bold text-cyber-primary mb-4">SCAN RESULTS</h2>
+        <div className="bg-cyber-darker p-4 rounded font-mono text-sm">
+          <div className="text-cyber-muted">Waiting for scan execution...</div>
+          <div className="text-cyber-accent text-xs mt-2">
+            Results will appear here in real-time during scan execution.
+          </div>
+        </div>
+      </div>
+
+  </div>
+  );
+}
+export default NetworkRecon;

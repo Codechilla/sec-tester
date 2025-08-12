@@ -1,0 +1,13 @@
+name: sec-tester-env
+dependencies:
+  - python=3.11
+  - fastapi
+  - uvicorn
+  - sqlalchemy
+  - asyncpg
+  - redis-py
+  - pytest
+  - httpx
+  - pip
+  - pip:
+    - redis

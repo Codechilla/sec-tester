@@ -1,0 +1,10 @@
+nohup: ignoring input
+
+> sec-tester@1.0.0 dev
+> vite
+
+
+  VITE v7.0.6  ready in 240 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose

@@ -1,0 +1,16 @@
+docs/prd.md
+README.md
+PROJECT-STATUS.md
+backend/venv/lib64/python3.13/site-packages/pip/_vendor/pygments/lexers/_mapping.py
+backend/venv/lib/python3.13/site-packages/pip/_vendor/pygments/lexers/_mapping.py
+Dockerfile
+get-docker.sh
+.bmad-infrastructure-devops/agents/infra-devops-platform.md
+web-bundles/expansion-packs/bmad-infrastructure-devops/agents/infra-devops-platform.txt
+.github/chatmodes/infra-devops-platform.chatmode.md
+docs/architecture/ai-integration-architecture.md
+docs/architecture/core-system-architecture.md
+docs/architecture.md
+docs/stories/story-1.2-fastapi-backend-basic-endpoints.md
+docs/prd/epic-1-foundation-core-infrastructure.md
+docs/stories/story-1.1-foundation-core-infrastructure.md
