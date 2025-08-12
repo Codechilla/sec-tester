@@ -9,13 +9,15 @@ import ServiceExploit from './ServiceExploit';
 import HostFingerprint from './HostFingerprint';
 
 // Tooltip component
+// Tooltip component (only for info icons)
 const Tooltip: React.FC<{ text: string }> = ({ text, children }) => (
-  <div className="relative group">
+  <span className="relative group inline-block">
     {children}
+    {/* Only show tooltip if children is an info icon */}
     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 w-48">
       {text}
     </div>
-  </div>
+  </span>
 );
 
 const Layout: React.FC = () => {
@@ -29,16 +31,16 @@ const Layout: React.FC = () => {
   }, []);
 
   const categories = [
-    { id: 'dashboard', name: 'COMMAND CENTER', icon: Shield, tooltip: 'Main dashboard overview' },
-    { id: 'network', name: 'NET RECON', icon: Globe, tooltip: 'Network reconnaissance tools' },
-    { id: 'vuln', name: 'VULN SCAN', icon: Eye, tooltip: 'Vulnerability scanning and assessment' },
-    { id: 'webapp', name: 'WEB APP SEC', icon: TerminalIcon, tooltip: 'Web application security testing' },
-    { id: 'exploit', name: 'SERVICE EXPLOIT', icon: Zap, tooltip: 'Service exploitation utilities' },
-    { id: 'fingerprint', name: 'HOST FINGERPRINT', icon: HelpCircle, tooltip: 'Host fingerprinting and profiling' },
-    { id: 'privilege', name: 'PRIVILEGE ESCALATION', icon: Shield, tooltip: 'Privilege escalation checks' },
-    { id: 'config', name: 'CONFIGURATION AUDIT', icon: Globe, tooltip: 'Configuration audit and hardening' },
-    { id: 'patch', name: 'PATCH & UPDATE REVIEW', icon: Eye, tooltip: 'Patch and update review' },
-    { id: 'useraccess', name: 'USER & ACCESS REVIEW', icon: TerminalIcon, tooltip: 'User and access review' }
+  { id: 'dashboard', name: 'COMMAND CENTER', icon: Shield },
+  { id: 'network', name: 'NET RECON', icon: Globe },
+  { id: 'vuln', name: 'VULN SCAN', icon: Eye },
+  { id: 'webapp', name: 'WEB APP SEC', icon: TerminalIcon },
+  { id: 'exploit', name: 'SERVICE EXPLOIT', icon: Zap },
+  { id: 'fingerprint', name: 'HOST FINGERPRINT', icon: HelpCircle },
+  { id: 'privilege', name: 'PRIVILEGE ESCALATION', icon: Shield },
+  { id: 'config', name: 'CONFIGURATION AUDIT', icon: Globe },
+  { id: 'patch', name: 'PATCH & UPDATE REVIEW', icon: Eye },
+  { id: 'useraccess', name: 'USER & ACCESS REVIEW', icon: TerminalIcon }
   ];
 
   const secondaryTabs: Record<string, { id: string; name: string }[]> = {
@@ -128,7 +130,7 @@ const Layout: React.FC = () => {
                   className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 ${
                     activeCategory === cat.id
                       ? 'bg-cyber-primary/20 border border-cyber-primary shadow-cyber text-cyber-primary'
-                      : 'hover:bg-cyber-muted/20 text-cyber-accent hover:text-cyber-primary'
+                      : 'text-cyber-accent'
                   }`}
                 >
                   <Icon size={20} />
@@ -149,7 +151,7 @@ const Layout: React.FC = () => {
                     className={`px-4 py-2 rounded-lg transition-colors ${
                       activeSecondary === tab.id
                         ? 'bg-cyber-primary/20 text-cyber-primary'
-                        : 'hover:bg-cyber-primary/10 text-cyber-accent'
+                        : 'text-cyber-accent'
                     } font-semibold`}
                   >
                     {tab.name}
