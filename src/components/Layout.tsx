@@ -10,15 +10,23 @@ import HostFingerprint from './HostFingerprint';
 
 // Tooltip component
 // Tooltip component (only for info icons)
-const Tooltip: React.FC<{ text: string }> = ({ text, children }) => (
-  <span className="relative group inline-block">
-    {children}
-    {/* Only show tooltip if children is an info icon */}
-    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 w-48">
-      {text}
-    </div>
-  </span>
-);
+// ...existing code...
+// Tooltip component (only for info icons, appears on click)
+const Tooltip: React.FC<{ text: string }> = ({ text, children }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <span className="relative inline-block">
+      <span onClick={() => setVisible(v => !v)} style={{ cursor: 'pointer' }}>
+        {children}
+      </span>
+      {visible && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded z-50 w-48">
+          {text}
+        </div>
+      )}
+    </span>
+  );
+};
 
 const Layout: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('dashboard');
