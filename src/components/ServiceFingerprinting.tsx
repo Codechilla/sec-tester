@@ -50,7 +50,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Target IP Address
                 <Tooltip text="The IP address of the target host for service fingerprinting. Use CIDR notation for network ranges.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -66,7 +66,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Port Range
                 <Tooltip text="Specify ports for service detection. Focus on common service ports for faster results.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <select
@@ -85,7 +85,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Version Intensity
                 <Tooltip text="Controls the intensity of version detection. Higher values provide more accurate results but take longer.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <select
@@ -113,7 +113,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label htmlFor="versionDetection" className="text-cyber-accent text-sm flex items-center">
                 Version Detection (-sV)
                 <Tooltip text="Probe open ports to determine service and version information.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -129,7 +129,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label htmlFor="osDetection" className="text-cyber-accent text-sm flex items-center">
                 OS Detection (-O)
                 <Tooltip text="Attempt to identify the target operating system using TCP/IP fingerprinting.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -145,7 +145,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label htmlFor="scriptScan" className="text-cyber-accent text-sm flex items-center">
                 Script Scan (-sC)
                 <Tooltip text="Run default scripts to gather additional service information and detect vulnerabilities.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -161,7 +161,7 @@ const ServiceFingerprinting: React.FC = () => {
               <label htmlFor="bannerGrabbing" className="text-cyber-accent text-sm flex items-center">
                 Banner Grabbing
                 <Tooltip text="Collect service banners for additional service identification and version information.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -175,7 +175,7 @@ const ServiceFingerprinting: React.FC = () => {
 
         <div className="mt-6 flex justify-center">
           <button className="cyber-button flex items-center space-x-2">
-            <Play size={16} />
+            <Play size={13} />
             <span>START FINGERPRINTING</span>
           </button>
         </div>

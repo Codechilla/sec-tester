@@ -64,7 +64,7 @@ const HostDiscovery: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Target Network
                 <Tooltip text="Network range for host discovery. Use CIDR notation (e.g., 192.168.1.0/24) or IP ranges.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -80,7 +80,7 @@ const HostDiscovery: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Timing Template
                 <Tooltip text="Scan timing affects discovery speed and stealth. T4 is recommended for most scenarios.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <select
@@ -100,7 +100,7 @@ const HostDiscovery: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 TCP/UDP Ports for Ping
                 <Tooltip text="Comma-separated list of ports to use for TCP/UDP ping probes. Common ports increase discovery success.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -125,7 +125,7 @@ const HostDiscovery: React.FC = () => {
               <label htmlFor="icmpPing" className="text-cyber-accent text-sm flex items-center">
                 ICMP Echo (-PE)
                 <Tooltip text="Standard ICMP ping discovery. May be blocked by firewalls.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -141,7 +141,7 @@ const HostDiscovery: React.FC = () => {
               <label htmlFor="tcpPing" className="text-cyber-accent text-sm flex items-center">
                 TCP SYN Ping (-PS)
                 <Tooltip text="TCP SYN packets to specified ports. Often bypasses firewalls.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -157,7 +157,7 @@ const HostDiscovery: React.FC = () => {
               <label htmlFor="udpPing" className="text-cyber-accent text-sm flex items-center">
                 UDP Ping (-PU)
                 <Tooltip text="UDP packets to specified ports. Useful for discovering hosts behind firewalls.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -173,7 +173,7 @@ const HostDiscovery: React.FC = () => {
               <label htmlFor="arpScan" className="text-cyber-accent text-sm flex items-center">
                 ARP Scan (-PR)
                 <Tooltip text="ARP requests for local network discovery. Very effective on local subnets.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -189,7 +189,7 @@ const HostDiscovery: React.FC = () => {
               <label htmlFor="synScan" className="text-cyber-accent text-sm flex items-center">
                 Host Discovery Only
                 <Tooltip text="Skip port scanning, only perform host discovery (-sn flag).">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -203,7 +203,7 @@ const HostDiscovery: React.FC = () => {
 
         <div className="mt-6 flex justify-center">
           <button className="cyber-button flex items-center space-x-2">
-            <Play size={16} />
+            <Play size={13} />
             <span>START HOST DISCOVERY</span>
           </button>
         </div>

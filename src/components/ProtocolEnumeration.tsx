@@ -84,7 +84,7 @@ const ProtocolEnumeration: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Target IP Address
                 <Tooltip text="Target host for protocol enumeration. Single IP address or hostname.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -100,7 +100,7 @@ const ProtocolEnumeration: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Script Intensity
                 <Tooltip text="Controls the depth of protocol enumeration scripts. Comprehensive mode runs extensive protocol-specific tests.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <select
@@ -118,7 +118,7 @@ const ProtocolEnumeration: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Target Ports
                 <Tooltip text="Comma-separated list of ports to enumerate. Focus on protocol-specific ports for better results.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -155,7 +155,7 @@ const ProtocolEnumeration: React.FC = () => {
             <label className="block text-cyber-accent text-sm mb-2 flex items-center">
               Timing Template
               <Tooltip text="Scan timing affects enumeration speed. T4 provides good balance of speed and reliability.">
-                <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
               </Tooltip>
             </label>
             <select
@@ -179,7 +179,7 @@ const ProtocolEnumeration: React.FC = () => {
 
         <div className="mt-6 flex justify-center">
           <button className="cyber-button flex items-center space-x-2">
-            <Play size={16} />
+            <Play size={13} />
             <span>START PROTOCOL ENUMERATION</span>
           </button>
         </div>

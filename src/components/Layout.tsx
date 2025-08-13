@@ -45,16 +45,16 @@ const Layout: React.FC = () => {
   }, []);
 
   const categories = [
-  { id: 'dashboard', name: 'COMMAND CENTER', icon: Shield },
-  { id: 'network', name: 'NET RECON', icon: Globe },
-  { id: 'vuln', name: 'VULN SCAN', icon: Eye },
-  { id: 'webapp', name: 'WEB APP SEC', icon: TerminalIcon },
-  { id: 'exploit', name: 'SERVICE EXPLOIT', icon: Zap },
-  { id: 'fingerprint', name: 'HOST FINGERPRINT', icon: HelpCircle },
-  { id: 'privilege', name: 'PRIVILEGE ESCALATION', icon: Shield },
-  { id: 'config', name: 'CONFIGURATION AUDIT', icon: Globe },
-  { id: 'patch', name: 'PATCH & UPDATE REVIEW', icon: Eye },
-  { id: 'useraccess', name: 'USER & ACCESS REVIEW', icon: TerminalIcon }
+    { id: 'dashboard', name: 'COMMAND\nCENTER', icon: Shield },
+    { id: 'network', name: 'NETWORK\nRECON', icon: Globe },
+    { id: 'vuln', name: 'VULN\nSCAN', icon: Eye },
+    { id: 'webapp', name: 'WEB APP\nSECURITY', icon: TerminalIcon },
+    { id: 'exploit', name: 'SERVICE\nEXPLOIT', icon: Zap },
+    { id: 'fingerprint', name: 'HOST\nFINGERPRINT', icon: HelpCircle },
+    { id: 'privilege', name: 'PRIVILEGE\nESCALATION', icon: Shield },
+    { id: 'config', name: 'CONFIG\nAUDIT', icon: Globe },
+    { id: 'patch', name: 'PATCH &\nUPDATE', icon: Eye },
+    { id: 'useraccess', name: 'USER &\nACCESS', icon: TerminalIcon }
   ];
 
   const secondaryTabs: Record<string, { id: string; name: string; icon?: any }[]> = {
@@ -140,15 +140,10 @@ const Layout: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-cyber-dark text-cyber-primary font-cyber matrix-rain scan-line">
-      {/* Main Header for BMAD and Playwright compliance */}
-      <header className="border-b border-cyber-border bg-cyber-dark/80 backdrop-blur">
-        <div className="flex flex-col items-center py-4">
-          <h1 className="text-3xl md:text-5xl font-cyber neon-glow mb-2">CYBER SECURITY ASSESSMENT PLATFORM</h1>
-        </div>
-      </header>
+  {/* Main Header removed as requested */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-64 flex-shrink-0 overflow-y-auto bg-cyber-dark/60 backdrop-blur border-r border-cyber-border p-4 neon-glow">
+  <aside className="w-56 flex-shrink-0 overflow-y-auto bg-cyber-dark/60 backdrop-blur border-r border-cyber-border p-3 neon-glow">
           <nav className="space-y-2">
             {categories.map(cat => {
               const Icon = cat.icon;
@@ -156,14 +151,18 @@ const Layout: React.FC = () => {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 ${
+                  className={`w-full flex items-center justify-start gap-3 px-4 py-3 rounded-lg border transition-all duration-300 font-semibold text-base ${
                     activeCategory === cat.id
-                      ? 'bg-cyber-primary/20 border border-cyber-primary shadow-cyber text-cyber-primary'
-                      : 'text-cyber-accent'
+                      ? 'bg-cyber-primary/20 border-cyber-primary shadow-cyber text-cyber-primary'
+                      : 'border-transparent text-cyber-accent hover:bg-cyber-primary/10'
                   }`}
                 >
-                  <Icon size={20} />
-                  <span className="font-semibold">{cat.name}</span>
+                  <span className="inline-flex items-center justify-center w-7 h-7">
+                    <Icon size={28} />
+                  </span>
+                  <span className="truncate leading-tight whitespace-pre-line text-left w-full block">
+                    {cat.name}
+                  </span>
                 </button>
               );
             })}
@@ -171,7 +170,7 @@ const Layout: React.FC = () => {
         </aside>
         {/* Main and Secondary Nav */}
         <div className="flex flex-col flex-1 overflow-y-auto">
-          <div className="bg-cyber-card p-2">
+          <div className="bg-cyber-card pt-6 pb-6 px-2">
             <ul className={`flex ${activeCategory === 'network' ? 'justify-between w-full' : 'space-x-4'}`}>
               {secondaryTabs[activeCategory].map(tab => (
                 <li key={tab.id} className={activeCategory === 'network' ? 'flex-1 flex justify-center' : ''}>
@@ -185,7 +184,7 @@ const Layout: React.FC = () => {
                       }`}
                       title={tab.name}
                     >
-                      <tab.icon size={32} />
+                      <tab.icon size={26} />
                     </button>
                   ) : (
                     <button
@@ -205,8 +204,8 @@ const Layout: React.FC = () => {
           </div>
           {/* Dynamic sub-category title for Network Recon */}
           {activeCategory === 'network' && (
-            <div className="px-4 pt-4 pb-2 bg-cyber-darker">
-              <h2 className="text-2xl font-cyber font-bold text-cyber-primary animate-glow">
+            <div className="px-4 pt-4 pb-2 bg-cyber-darker flex justify-center">
+              <h2 className="text-2xl font-cyber font-bold text-cyber-primary animate-glow text-center">
                 {secondaryTabs['network'].find(tab => tab.id === activeSecondary)?.name || 'NETWORK RECONNAISSANCE'}
               </h2>
             </div>
@@ -214,7 +213,7 @@ const Layout: React.FC = () => {
           <main className="flex-1 p-4 bg-cyber-darker">{renderContent()}</main>
         </div>
         {/* AI Assistant Panel */}
-        <aside className="w-64 bg-cyber-dark/60 backdrop-blur border-l border-cyber-border p-4 hidden lg:block">
+        <aside className="w-52 bg-cyber-dark/60 backdrop-blur border-l border-cyber-border p-3 hidden lg:block">
           <h2 className="text-lg font-semibold text-cyber-accent mb-2">AI Assistant</h2>
           <p className="text-sm">Contextual help and suggestions in real time.</p>
         </aside>
@@ -223,11 +222,11 @@ const Layout: React.FC = () => {
       <footer className="bg-cyber-dark/80 backdrop-blur border-t border-cyber-border p-2">
         <div className="flex items-center justify-between text-xs text-cyber-primary">
           <div className="flex space-x-4">
-            <div className="flex items-center space-x-1"><Wifi size={14} /> <span>Online</span></div>
-            <div className="flex items-center space-x-1"><Server size={14} /> <span>API Connected</span></div>
+            <div className="flex items-center space-x-1"><Wifi size={11} /> <span>Online</span></div>
+            <div className="flex items-center space-x-1"><Server size={11} /> <span>API Connected</span></div>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1"><Clock size={14} /> <span>{currentTime.toLocaleTimeString()}</span></div>
+            <div className="flex items-center space-x-1"><Clock size={11} /> <span>{currentTime.toLocaleTimeString()}</span></div>
           </div>
         </div>
       </footer>

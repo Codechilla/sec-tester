@@ -57,7 +57,7 @@ const NetworkMapping: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Target Network
                 <Tooltip text="Network range to map. Use CIDR notation (e.g., 192.168.1.0/24) to specify the subnet range.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <input
@@ -73,7 +73,7 @@ const NetworkMapping: React.FC = () => {
               <label className="block text-cyber-accent text-sm mb-2 flex items-center">
                 Timing Template
                 <Tooltip text="Scan timing: T0 (Paranoid), T1 (Sneaky), T3 (Normal), T4 (Aggressive), T5 (Insane)">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
               <select
@@ -102,7 +102,7 @@ const NetworkMapping: React.FC = () => {
               <label htmlFor="pingSweep" className="text-cyber-accent text-sm flex items-center">
                 Ping Sweep (-sn)
                 <Tooltip text="Discover active hosts on the network without port scanning.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -118,7 +118,7 @@ const NetworkMapping: React.FC = () => {
               <label htmlFor="traceroute" className="text-cyber-accent text-sm flex items-center">
                 Traceroute Analysis
                 <Tooltip text="Trace network path to discover network topology and routing information.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -134,7 +134,7 @@ const NetworkMapping: React.FC = () => {
               <label htmlFor="topologyDiscovery" className="text-cyber-accent text-sm flex items-center">
                 Topology Discovery
                 <Tooltip text="Advanced network mapping to discover network topology and device relationships.">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -150,7 +150,7 @@ const NetworkMapping: React.FC = () => {
               <label htmlFor="hostDiscovery" className="text-cyber-accent text-sm flex items-center">
                 Host Discovery
                 <Tooltip text="Comprehensive host discovery using multiple techniques (ICMP, TCP, UDP).">
-                  <HelpCircle size={14} className="ml-1 text-cyber-muted cursor-pointer" />
+                  <HelpCircle size={11} className="ml-1 text-cyber-muted cursor-pointer" />
                 </Tooltip>
               </label>
             </div>
@@ -164,7 +164,7 @@ const NetworkMapping: React.FC = () => {
 
         <div className="mt-6 flex justify-center">
           <button className="cyber-button flex items-center space-x-2">
-            <Play size={16} />
+            <Play size={13} />
             <span>START NETWORK MAPPING</span>
           </button>
         </div>
