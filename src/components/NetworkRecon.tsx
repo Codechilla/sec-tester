@@ -20,7 +20,7 @@ const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, 
 };
 
 const NetworkRecon: React.FC = () => {
-  // Sub-category tabs
+  // Sub-category definitions
   const subcategories = [
     { id: 'port-scan', name: 'Port Scan', icon: Search },
     { id: 'service-fingerprint', name: 'Service Fingerprinting', icon: Globe },
@@ -28,7 +28,8 @@ const NetworkRecon: React.FC = () => {
     { id: 'host-discovery', name: 'Host Discovery', icon: Play },
     { id: 'protocol-enum', name: 'Protocol Enumeration', icon: HelpCircle }
   ];
-  const [selectedSub, setSelectedSub] = useState('port-scan');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('port-scan');
+  // Removed activeTab state
   const [config, setConfig] = useState({
     targetIP: '192.168.122.1',
     portRange: '1-65535',
@@ -208,19 +209,15 @@ const NetworkRecon: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Sub-category icon tabs */}
+      {/* Sub-category icons as tabs */}
       <div className="flex justify-center space-x-6 mb-4">
         {subcategories.map(sub => {
           const Icon = sub.icon;
           return (
             <button
               key={sub.id}
-              onClick={() => setSelectedSub(sub.id)}
-              className={`p-3 rounded-full border-2 transition-all duration-200 ${
-                selectedSub === sub.id
-                  ? 'bg-cyber-primary text-cyber-dark border-cyber-primary shadow-cyber'
-                  : 'bg-cyber-dark text-cyber-accent border-cyber-border hover:bg-cyber-muted'
-              }`}
+              onClick={() => setSelectedSubcategory(sub.id)}
+              className={`p-3 rounded-full transition-all duration-200 border-2 ${selectedSubcategory === sub.id ? 'bg-cyber-primary text-cyber-dark border-cyber-primary shadow-cyber' : 'bg-cyber-dark text-cyber-accent border-transparent'}`}
               title={sub.name}
             >
               <Icon size={28} />
@@ -230,32 +227,24 @@ const NetworkRecon: React.FC = () => {
       </div>
       <div className="text-center">
         <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
-          {subcategories.find(sub => sub.id === selectedSub)?.name}
+          {subcategories.find(sub => sub.id === selectedSubcategory)?.name}
         </h1>
       </div>
       <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
-        {selectedSub === 'port-scan' && (
-          <>
-            {renderPortScanConfig()}
-            <div>
-              <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
-                <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
-                <code className="text-cyber-primary text-sm font-mono">{generateCommand()}</code>
-              </div>
-              <div className="mt-6 flex justify-center">
-                <button className="cyber-button flex items-center space-x-2">
-                  <Play size={16} />
-                  <span>EXECUTE SCAN</span>
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-        {selectedSub !== 'port-scan' && (
-          <div className="text-cyber-muted text-center py-12">
-            {subcategories.find(sub => sub.id === selectedSub)?.name} module coming soon...
+        {selectedSubcategory === 'port-scan' && renderPortScanConfig()}
+        {/* You can add conditional rendering for other subcategories here */}
+        <div>
+          <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
+            <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
+            <code className="text-cyber-primary text-sm font-mono">{generateCommand()}</code>
           </div>
-        )}
+          <div className="mt-6 flex justify-center">
+            <button className="cyber-button flex items-center space-x-2">
+              <Play size={16} />
+              <span>EXECUTE SCAN</span>
+            </button>
+          </div>
+        </div>
       </div>
       {/* Results Panel */}
       <div className="cyber-card p-6 rounded-lg">
