@@ -20,7 +20,12 @@ const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, 
 };
 
 const NetworkRecon: React.FC = () => {
-  // Removed activeTab state
+  const tabs = [
+    { id: 'port-scan', name: 'Port Scan', icon: Search },
+    { id: 'service-enum', name: 'Service Enum', icon: Globe },
+    { id: 'network-map', name: 'Net Map', icon: Settings }
+  ];
+  const [activeTab, setActiveTab] = useState('port-scan');
   const [config, setConfig] = useState({
     targetIP: '192.168.122.1',
     portRange: '1-65535',
@@ -202,24 +207,52 @@ const NetworkRecon: React.FC = () => {
     <div className="space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
-          NETWORK RECONNAISSANCE
+          {tabs.find(tab => tab.id === activeTab)?.name}
         </h1>
       </div>
-  {/* Tabs removed as requested */}
-      <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
-        {renderPortScanConfig()}
-        <div>
-          <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
-            <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
-            <code className="text-cyber-primary text-sm font-mono">{generateCommand()}</code>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button className="cyber-button flex items-center space-x-2">
-              <Play size={16} />
-              <span>EXECUTE SCAN</span>
+      <div className="mb-4 flex space-x-4 justify-center">
+        {tabs.map(tab => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`p-3 rounded-full transition-all duration-300 border-2 ${
+                activeTab === tab.id
+                  ? 'bg-cyber-primary text-cyber-dark border-cyber-primary shadow-cyber'
+                  : 'bg-cyber-dark text-cyber-accent border-transparent'
+              }`}
+              title={tab.name}
+            >
+              <Icon size={28} />
             </button>
-          </div>
-        </div>
+          );
+        })}
+      </div>
+      <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
+        {activeTab === 'port-scan' && (
+          <>
+            {renderPortScanConfig()}
+            <div>
+              <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
+                <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
+                <code className="text-cyber-primary text-sm font-mono">{generateCommand()}</code>
+              </div>
+              <div className="mt-6 flex justify-center">
+                <button className="cyber-button flex items-center space-x-2">
+                  <Play size={16} />
+                  <span>EXECUTE SCAN</span>
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+        {activeTab === 'service-enum' && (
+          <div className="text-cyber-muted text-center py-12">Service Enumeration module coming soon...</div>
+        )}
+        {activeTab === 'network-map' && (
+          <div className="text-cyber-muted text-center py-12">Network Mapping module coming soon...</div>
+        )}
       </div>
       {/* Results Panel */}
       <div className="cyber-card p-6 rounded-lg">
