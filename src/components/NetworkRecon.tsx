@@ -11,7 +11,7 @@ const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, 
       style={{ cursor: 'pointer' }}>
       {children}
       {hovered && (
-  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-accent border-8 text-black font-bold text-sm rounded z-50 w-64 shadow-lg" style={{ borderColor: '#003344' }}>
+  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-accent border-8 border-cyber-accent text-black font-bold text-sm rounded z-50 w-64 shadow-lg">
           {text}
         </div>
       )}
