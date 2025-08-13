@@ -20,12 +20,15 @@ const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, 
 };
 
 const NetworkRecon: React.FC = () => {
-  const tabs = [
+  // Sub-category tabs
+  const subcategories = [
     { id: 'port-scan', name: 'Port Scan', icon: Search },
-    { id: 'service-enum', name: 'Service Enum', icon: Globe },
-    { id: 'network-map', name: 'Net Map', icon: Settings }
+    { id: 'service-fingerprint', name: 'Service Fingerprinting', icon: Globe },
+    { id: 'network-mapping', name: 'Network Mapping', icon: Settings },
+    { id: 'host-discovery', name: 'Host Discovery', icon: Play },
+    { id: 'protocol-enum', name: 'Protocol Enumeration', icon: HelpCircle }
   ];
-  const [activeTab, setActiveTab] = useState('port-scan');
+  const [selectedSub, setSelectedSub] = useState('port-scan');
   const [config, setConfig] = useState({
     targetIP: '192.168.122.1',
     portRange: '1-65535',
@@ -205,32 +208,33 @@ const NetworkRecon: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
-          {tabs.find(tab => tab.id === activeTab)?.name}
-        </h1>
-      </div>
-      <div className="mb-4 flex space-x-4 justify-center">
-        {tabs.map(tab => {
-          const Icon = tab.icon;
+      {/* Sub-category icon tabs */}
+      <div className="flex justify-center space-x-6 mb-4">
+        {subcategories.map(sub => {
+          const Icon = sub.icon;
           return (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`p-3 rounded-full transition-all duration-300 border-2 ${
-                activeTab === tab.id
+              key={sub.id}
+              onClick={() => setSelectedSub(sub.id)}
+              className={`p-3 rounded-full border-2 transition-all duration-200 ${
+                selectedSub === sub.id
                   ? 'bg-cyber-primary text-cyber-dark border-cyber-primary shadow-cyber'
-                  : 'bg-cyber-dark text-cyber-accent border-transparent'
+                  : 'bg-cyber-dark text-cyber-accent border-cyber-border hover:bg-cyber-muted'
               }`}
-              title={tab.name}
+              title={sub.name}
             >
               <Icon size={28} />
             </button>
           );
         })}
       </div>
+      <div className="text-center">
+        <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
+          {subcategories.find(sub => sub.id === selectedSub)?.name}
+        </h1>
+      </div>
       <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
-        {activeTab === 'port-scan' && (
+        {selectedSub === 'port-scan' && (
           <>
             {renderPortScanConfig()}
             <div>
@@ -247,11 +251,10 @@ const NetworkRecon: React.FC = () => {
             </div>
           </>
         )}
-        {activeTab === 'service-enum' && (
-          <div className="text-cyber-muted text-center py-12">Service Enumeration module coming soon...</div>
-        )}
-        {activeTab === 'network-map' && (
-          <div className="text-cyber-muted text-center py-12">Network Mapping module coming soon...</div>
+        {selectedSub !== 'port-scan' && (
+          <div className="text-cyber-muted text-center py-12">
+            {subcategories.find(sub => sub.id === selectedSub)?.name} module coming soon...
+          </div>
         )}
       </div>
       {/* Results Panel */}
@@ -264,8 +267,7 @@ const NetworkRecon: React.FC = () => {
           </div>
         </div>
       </div>
-
-  </div>
+    </div>
   );
 }
 export default NetworkRecon;
