@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Globe, Eye, Terminal as TerminalIcon, Zap, HelpCircle, Wifi, Server, Clock } from 'lucide-react';
+import { Shield, Globe, Eye, Terminal as TerminalIcon, Zap, HelpCircle, Wifi, Server, Clock, ScanLine, Fingerprint, Map, Radar, ListChecks } from 'lucide-react';
 import Dashboard from './Dashboard';
 import NetworkRecon from './NetworkRecon';
+import PortScan from './PortScan';
+import ServiceFingerprinting from './ServiceFingerprinting';
+import NetworkMapping from './NetworkMapping';
+import HostDiscovery from './HostDiscovery';
+import ProtocolEnumeration from './ProtocolEnumeration';
 import VulnAssessment from './VulnAssessment';
 import VulnAssessmentForm from './VulnAssessmentForm';
 import WebAppSec from './WebAppSec';
@@ -52,18 +57,18 @@ const Layout: React.FC = () => {
   { id: 'useraccess', name: 'USER & ACCESS REVIEW', icon: TerminalIcon }
   ];
 
-  const secondaryTabs: Record<string, { id: string; name: string }[]> = {
+  const secondaryTabs: Record<string, { id: string; name: string; icon?: any }[]> = {
     dashboard: [
       { id: 'overview', name: 'Overview' },
       { id: 'quick-launch', name: 'Quick Launch' },
       { id: 'system-status', name: 'System Status' }
     ],
     network: [
-      { id: 'port-scan', name: 'Port Scan' },
-      { id: 'service-enum', name: 'Service Fingerprinting' },
-      { id: 'network-map', name: 'Network Mapping' },
-      { id: 'host-discovery', name: 'Host Discovery' },
-      { id: 'protocol-enum', name: 'Protocol Enumeration' }
+      { id: 'port-scan', name: 'Port Scan', icon: ScanLine },
+      { id: 'service-enum', name: 'Service Fingerprinting', icon: Fingerprint },
+      { id: 'network-map', name: 'Network Mapping', icon: Map },
+      { id: 'host-discovery', name: 'Host Discovery', icon: Radar },
+      { id: 'protocol-enum', name: 'Protocol Enumeration', icon: ListChecks }
     ],
     vuln: [
       { id: 'overview', name: 'Overview' },
@@ -97,7 +102,22 @@ const Layout: React.FC = () => {
       case 'dashboard':
         return <Dashboard />;
       case 'network':
-        return <NetworkRecon />;
+        const selectedSubcategoryName = secondaryTabs['network'].find(tab => tab.id === activeSecondary)?.name || 'NETWORK RECONNAISSANCE';
+        // Render different components based on selected sub-category
+        switch (activeSecondary) {
+          case 'port-scan':
+            return <PortScan />;
+          case 'service-enum':
+            return <ServiceFingerprinting />;
+          case 'network-map':
+            return <NetworkMapping />;
+          case 'host-discovery':
+            return <HostDiscovery />;
+          case 'protocol-enum':
+            return <ProtocolEnumeration />;
+          default:
+            return <PortScan />; // Default to port scan
+        }
       case 'vuln':
         return (
           <div className="space-y-6">
@@ -152,23 +172,45 @@ const Layout: React.FC = () => {
         {/* Main and Secondary Nav */}
         <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="bg-cyber-card p-2">
-            <ul className="flex space-x-4">
+            <ul className={`flex ${activeCategory === 'network' ? 'justify-between w-full' : 'space-x-4'}`}>
               {secondaryTabs[activeCategory].map(tab => (
-                <li key={tab.id}>
-                  <button
-                    onClick={() => setActiveSecondary(tab.id)}
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      activeSecondary === tab.id
-                        ? 'bg-cyber-primary/20 text-cyber-primary'
-                        : 'text-cyber-accent'
-                    } font-semibold`}
-                  >
-                    {tab.name}
-                  </button>
+                <li key={tab.id} className={activeCategory === 'network' ? 'flex-1 flex justify-center' : ''}>
+                  {activeCategory === 'network' && tab.icon ? (
+                    <button
+                      onClick={() => setActiveSecondary(tab.id)}
+                      className={`p-2 rounded-lg transition-colors border-2 border-transparent w-full flex justify-center items-center ${
+                        activeSecondary === tab.id
+                          ? 'bg-cyber-primary/20 text-cyber-primary'
+                          : 'text-cyber-accent hover:bg-cyber-primary/10'
+                      }`}
+                      title={tab.name}
+                    >
+                      <tab.icon size={32} />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setActiveSecondary(tab.id)}
+                      className={`px-4 py-2 rounded-lg transition-colors ${
+                        activeSecondary === tab.id
+                          ? 'bg-cyber-primary/20 text-cyber-primary'
+                          : 'text-cyber-accent'
+                      } font-semibold`}
+                    >
+                      {tab.name}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
+          {/* Dynamic sub-category title for Network Recon */}
+          {activeCategory === 'network' && (
+            <div className="px-4 pt-4 pb-2 bg-cyber-darker">
+              <h2 className="text-2xl font-cyber font-bold text-cyber-primary animate-glow">
+                {secondaryTabs['network'].find(tab => tab.id === activeSecondary)?.name || 'NETWORK RECONNAISSANCE'}
+              </h2>
+            </div>
+          )}
           <main className="flex-1 p-4 bg-cyber-darker">{renderContent()}</main>
         </div>
         {/* AI Assistant Panel */}

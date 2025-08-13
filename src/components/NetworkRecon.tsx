@@ -19,16 +19,11 @@ const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, 
   );
 };
 
-const NetworkRecon: React.FC = () => {
-  // Sub-category definitions
-  const subcategories = [
-    { id: 'port-scan', name: 'Port Scan', icon: Search },
-    { id: 'service-fingerprint', name: 'Service Fingerprinting', icon: Globe },
-    { id: 'network-mapping', name: 'Network Mapping', icon: Settings },
-    { id: 'host-discovery', name: 'Host Discovery', icon: Play },
-    { id: 'protocol-enum', name: 'Protocol Enumeration', icon: HelpCircle }
-  ];
-  const [selectedSubcategory, setSelectedSubcategory] = useState('port-scan');
+interface NetworkReconProps {
+  selectedSubcategoryName?: string;
+}
+
+const NetworkRecon: React.FC<NetworkReconProps> = ({ selectedSubcategoryName }) => {
   // Removed activeTab state
   const [config, setConfig] = useState({
     targetIP: '192.168.122.1',
@@ -209,30 +204,14 @@ const NetworkRecon: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Sub-category icons as tabs */}
-      <div className="flex justify-center space-x-6 mb-4">
-        {subcategories.map(sub => {
-          const Icon = sub.icon;
-          return (
-            <button
-              key={sub.id}
-              onClick={() => setSelectedSubcategory(sub.id)}
-              className={`p-3 rounded-full transition-all duration-200 border-2 ${selectedSubcategory === sub.id ? 'bg-cyber-primary text-cyber-dark border-cyber-primary shadow-cyber' : 'bg-cyber-dark text-cyber-accent border-transparent'}`}
-              title={sub.name}
-            >
-              <Icon size={28} />
-            </button>
-          );
-        })}
-      </div>
       <div className="text-center">
         <h1 className="text-3xl font-cyber font-bold text-cyber-primary animate-glow mb-2">
-          {subcategories.find(sub => sub.id === selectedSubcategory)?.name}
+          {selectedSubcategoryName || 'NETWORK RECONNAISSANCE'}
         </h1>
       </div>
+  {/* Tabs removed as requested */}
       <div className="cyber-card p-6 rounded-lg bg-cyber-dark border-2 border-cyber-primary text-cyber-primary">
-        {selectedSubcategory === 'port-scan' && renderPortScanConfig()}
-        {/* You can add conditional rendering for other subcategories here */}
+        {renderPortScanConfig()}
         <div>
           <div className="mt-6 p-4 bg-cyber-darker rounded border border-cyber-border">
             <div className="text-cyber-accent text-sm mb-2">Generated Command:</div>
@@ -256,7 +235,8 @@ const NetworkRecon: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+
+  </div>
   );
 }
 export default NetworkRecon;
