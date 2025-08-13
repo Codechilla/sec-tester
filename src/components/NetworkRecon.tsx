@@ -3,13 +3,14 @@ import { Globe, Search, Settings, Play, HelpCircle } from 'lucide-react';
 
 // Tooltip component (only for info icons, appears on click)
 const Tooltip: React.FC<{ text: string, children: React.ReactNode }> = ({ text, children }) => {
-  const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
   return (
-    <span className="relative inline-block">
-      <span onClick={() => setVisible(v => !v)} style={{ cursor: 'pointer' }}>
-        {children}
-      </span>
-      {visible && (
+    <span className="relative inline-block"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ cursor: 'pointer' }}>
+      {children}
+      {hovered && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-cyber-darker border border-cyber-primary text-cyber-primary text-xs rounded z-50 w-64">
           {text}
         </div>
